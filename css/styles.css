@@ -9,6 +9,7 @@
 }
 
 body {
+	min-height: 100vh;
 	margin: 0;
 	font-family: Nunito, sans-serif;
 	background-color: var(--background-color);
@@ -153,6 +154,15 @@ a {
 	border-radius: 4px;
 	background-color: var(--elements-color);
 	color: var(--text-color);
+}
+
+.column {
+	align-items: center;
+	flex-direction: column;
+}
+
+.thin {
+	font-weight: 300;
 }
 
 @media (max-width: 768px) {
