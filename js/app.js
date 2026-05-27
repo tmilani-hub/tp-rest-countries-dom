@@ -1,12 +1,19 @@
 const API = "https://restcountries.com/v3.1/";
 
+const $form = document.querySelector("#form");
 const $search = document.querySelector("#INPsearch");
 const $countries_container = document.querySelector(".countries-container");
 
 async function get_name(name) {
-	const reponse = await fetch(API + "name/" + name);
-	const data = await reponse.json();
-	return data;
+	const data = await get_ALL();
+	let tab = [];
+	for (let i = 0; i < data.length; i++) {
+		if (data[i]["name"]["common"].includes(name)) {
+			tab.push(data[i]);
+		}
+	}
+	console.log(tab)
+	return tab;
 }
 
 async function get_ALL() {
@@ -17,11 +24,11 @@ async function get_ALL() {
 	return data;
 }
 
-function create_card(png, alt, title, popu, reg, cap) {
+function create_card(png, alt, title, popu, reg, cap, cnty) {
 	const div = document.createElement("div");
 	const div_text = document.createElement("div");
 	const img = document.createElement("img");
-	const h3 = document.createElement("h3");
+	const h5 = document.createElement("h5");
 	const p_popu = document.createElement("p");
 	const span_popu = document.createElement("span");
 	const p_reg = document.createElement("p");
@@ -33,9 +40,9 @@ function create_card(png, alt, title, popu, reg, cap) {
 	div_text.classList.add("card-text");
 	img.src = png;
 	img.alt = alt;
-	h3.classList.add("card-title");
+	h5.classList.add("card-title");
 
-	h3.textContent = title;
+	h5.textContent = title;
 	p_popu.textContent = "population: ";
 	p_reg.textContent = "region: ";
 	p_cap.textContent = "capital: ";
@@ -46,8 +53,12 @@ function create_card(png, alt, title, popu, reg, cap) {
 	p_popu.appendChild(span_popu);
 	p_reg.appendChild(span_reg);
 	p_cap.appendChild(span_cap);
-	div_text.append(h3, p_popu, p_reg, p_cap);
+	div_text.append(h5, p_popu, p_reg, p_cap);
 	div.append(img, div_text);
+
+	div.addEventListener("click", () => {
+		document.location.assign(`/html/country.html?theme=${theme_ligth}&cny=${cnty}`);
+	});
 
 	return div;
 }
@@ -61,6 +72,7 @@ async function set_country(data) {
 			data[i]["population"],
 			data[i]["region"],
 			data[i]["capital"]?.[0],
+			i,
 		);
 		$countries_container.appendChild(card);
 	}
@@ -76,31 +88,38 @@ function clear_country() {
 	$countries_container.innerHTML = "";
 }
 
-$search.addEventListener("input", async () => {
+$form.addEventListener("input", async (e) => {
+	e.preventDefault();
 	clear_country();
-	if ($search.value.length != 0) {
-		console.log(true);
-		const data = await get_name($search.value);
+	let fdata = new FormData($form);
+	let search = fdata.get("search");
+	let reg_select = fdata.get("reg-select");
+	if (search.length != 0) {
+		const data = await get_name(search);
+		await set_country(data);
 	} else {
-		console.log(false);
 		const data = await get_ALL();
 		await set_country(data);
 	}
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
-	console.log("Hello World index");
+	console.log("Hello World " + document.location.toString());
 	const data = await get_ALL();
 	clear_country();
 	await set_country(data);
+
+	// de base : true
+	theme_ligth = await get_theme(); 		// depend de la valeur precédante
+	theme_ligth = change_them(theme_ligth); // inverse
 });
 
 /*
 <div class="country-card">
-    <img src="https://flagcdn.com/w320/fr.png" alt="france flag" />
-    <h3 class="card-title card-text">Germany</h3>
-    <p class="card-text">population: <span class="thin">info</span></p>
-    <p class="card-text">region: <span class="thin">info</span></p>
-    <p class="card-text">capital: <span class="thin">info</span></p>
+	<img src="https://flagcdn.com/w320/fr.png" alt="france flag" />
+	<h3 class="card-title card-text">Germany</h3>
+	<p class="card-text">population: <span class="thin">info</span></p>
+	<p class="card-text">region: <span class="thin">info</span></p>
+	<p class="card-text">capital: <span class="thin">info</span></p>
 </div>
 */

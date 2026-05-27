@@ -9,6 +9,7 @@
 	box-shadow: 0 0 4px 0px rgba(0, 0, 0, 0.2);
 	border-radius: 4px;
 	cursor: pointer;
+	max-width: max-content;
 }
 
 .country-details {
@@ -21,6 +22,7 @@
 .country-details img {
 	width: 40%;
 	border: 1px solid #ddd;
+	border-radius: 8px;
 }
 
 .details-text {

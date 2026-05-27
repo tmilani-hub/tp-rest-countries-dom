@@ -1,58 +1,47 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Countries</title>
-		<link
-			href="https://fonts.googleapis.com/css?family=Nunito:300,500,600,700,800"
-			rel="stylesheet"
-		/>
-		<link rel="stylesheet" href="/css/styles.css" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-			integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
-			crossorigin="anonymous"
-			referrerpolicy="no-referrer"
-		/>
-		<meta
-			name="description"
-			content="A simple country search and filter application."
-		/>
-		<meta name="keywords" content="countries, search, filter, dark mode" />
-	</head>
-	<body>
-		<header class="header-container">
-			<div class="header-content">
-				<h1 class="title">Where in the world?</h1>
-				<button class="theme-changer">
-					<i class="fa-regular fa-moon"></i>&nbsp;&nbsp;Dark Mode
-				</button>
-			</div>
-		</header>
-		<main>
-			<section class="search-filter-container">
-				<form class="search-container">
-					<i class="fa-solid fa-magnifying-glass"></i>
-					<input
-						id="INPsearch"
-						type="text"
-						placeholder="Search for a country..."
-					/>
-					<select title="Filter by Region" class="filter-by-region">
-						<option hidden>Filter by Region</option>
-						<option value="Africa">Africa</option>
-						<option value="America">America</option>
-						<option value="Asia">Asia</option>
-						<option value="Europe">Europe</option>
-						<option value="Oceania">Oceania</option>
-					</select>
-				</form>
-			</section>
-			<section class="countries-container"></section>
-		</main>
-		<script src="/js/app.js"></script>
-		<script src="/js/theme.js"></script>
-	</body>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Countries</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,500,600,700,800" rel="stylesheet" />
+	<link rel="stylesheet" href="/css/styles.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+		integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<meta name="description" content="A simple country search and filter application." />
+	<meta name="keywords" content="countries, search, filter, dark mode" />
+</head>
+
+<body>
+	<header class="header-container">
+		<div class="header-content">
+			<h1 class="title">Where in the world?</h1>
+			<button class="theme-changer">
+				<i class="fa-regular fa-moon"></i>&nbsp;&nbsp;Dark Mode
+			</button>
+		</div>
+	</header>
+	<main>
+		<section class="search-filter-container">
+			<form id="form" class="search-container">
+				<i class="fa-solid fa-magnifying-glass"></i>
+				<input name="search" id="INPsearch" type="text" placeholder="Search for a country..." />
+				<select name="reg-select" title="Filter by Region" class="filter-by-region">
+					<option hidden>Filter by Region</option>
+					<option value="Africa">Africa</option>
+					<option value="America">America</option>
+					<option value="Asia">Asia</option>
+					<option value="Europe">Europe</option>
+					<option value="Oceania">Oceania</option>
+				</select>
+			</form>
+		</section>
+		<section class="countries-container"></section>
+	</main>
+	<script src="/js/theme.js"></script>
+	<script src="/js/app.js"></script>
+</body>
+
 </html>
