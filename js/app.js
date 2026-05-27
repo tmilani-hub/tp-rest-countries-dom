@@ -72,7 +72,7 @@ async function set_country(data) {
 			data[i]["population"],
 			data[i]["region"],
 			data[i]["capital"]?.[0],
-			i,
+			data[i]["name"]["common"],
 		);
 		$countries_container.appendChild(card);
 	}
