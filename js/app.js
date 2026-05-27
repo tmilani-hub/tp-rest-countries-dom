@@ -4,28 +4,30 @@ const $form = document.querySelector("#form");
 const $search = document.querySelector("#INPsearch");
 const $countries_container = document.querySelector(".countries-container");
 
-async function get_name(name) {
-	const data = await get_ALL();
+async function get_name(name, region) {
+	const data = await get_ALL(region);
 	let tab = [];
 	for (let i = 0; i < data.length; i++) {
 		if (data[i]["name"]["common"].includes(name)) {
 			tab.push(data[i]);
 		}
 	}
-	console.log(tab)
 	return tab;
 }
 
-async function get_ALL() {
-	const reponse = await fetch(
-		API + "all?fields=name,capital,flags,region,population",
-	);
+async function get_ALL(region) {
+	let reponse = "";
+	if (region != null) {
+		reponse = await fetch(API + `region/${region}`);
+	} else {
+		reponse = await fetch(API + "all?fields=name,capital,flags,region,population");
+	}
 	const data = await reponse.json();
 	return data;
 }
 
 function create_card(png, alt, title, popu, reg, cap, cnty) {
-	const div = document.createElement("div");
+	const div = document.createElement("button");
 	const div_text = document.createElement("div");
 	const img = document.createElement("img");
 	const h5 = document.createElement("h5");
@@ -91,14 +93,16 @@ function clear_country() {
 $form.addEventListener("input", async (e) => {
 	e.preventDefault();
 	clear_country();
+
 	let fdata = new FormData($form);
 	let search = fdata.get("search");
 	let reg_select = fdata.get("reg-select");
+
 	if (search.length != 0) {
-		const data = await get_name(search);
+		const data = await get_name(search, reg_select);
 		await set_country(data);
 	} else {
-		const data = await get_ALL();
+		const data = await get_ALL(reg_select);
 		await set_country(data);
 	}
 });

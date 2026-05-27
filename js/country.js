@@ -1,26 +1,24 @@
 const API = "https://restcountries.com/v3.1/";
 
+const back_btn = document.querySelector("#back");
+
+back_btn.addEventListener("click", () => {
+	document.location.assign(`/html/index.html?theme=${theme_ligth}`)
+});
+
 async function get_info_country() {
 	const url = await new URL(location.href);
 	let country = url.searchParams.get("cny");
 	return country;
 }
 
-async function get_ALL() {
-	const reponse = await fetch(API + "all?fields=flags,languages,population,region,subregion,name,capital,currencies,borders");
-	const data = await reponse.json();
-	return data;
-}
-
 async function get_name(name) {
-	const data = await get_ALL();
-	let salt = 1;
-	for (let i = 0; i < data.length; i++) {
-		if (data[i]["name"]["common"].includes(name)) {
-			salt = data[i];
-		}
+	const reponse = await fetch(API + "name/" + name);
+	const data = await reponse.json();
+	if (data.length > 1) {
+		console.log("ERROR", data, name);
 	}
-	return salt;
+	return data[0];
 }
 
 function actualise(alt_srcs, texts, title, borders) {
@@ -40,7 +38,7 @@ function actualise(alt_srcs, texts, title, borders) {
 	for (let i = 0; i < borders.length; i++) {
 		let a = document.createElement("a");
 		a.textContent = borders[i];
-		a.href = `/html/country.html?theme=${theme_ligth}&cny=${"France"}`
+		a.href = `/html/country.html?theme=${theme_ligth}&cny=${borders[i]}`
 		container.appendChild(a);
 	}
 	return "something";
@@ -54,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 	theme_ligth = change_them(theme_ligth); // inverse
 
 	const data = await get_name(await get_info_country());
-console.log(data)
 	let alt_srcs = [data.flags.alt, data.flags.png];
 	let texts = [data.name.official, data.population, data.region, data.subregion, data.capital?.[0], "jsp j'vien pa dici", data.currencies, data.languages];
 

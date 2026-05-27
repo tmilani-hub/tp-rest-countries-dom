@@ -10,6 +10,10 @@
 	border-radius: 4px;
 	cursor: pointer;
 	max-width: max-content;
+	border: none;
+	font-size: 20px;
+	background-color: var(--element-color);
+	color: var(--text-color);
 }
 
 .country-details {
